@@ -47,7 +47,7 @@
   <pluginRepositories>
     <pluginRepository>
       <id>apache.snapshots</id>
-      <url>http://repository.apache.org/snapshots</url>
+      <url>http://people.apache.org/maven-snapshot-repository/</url>
     </pluginRepository>
   </pluginRepositories>
 </project>

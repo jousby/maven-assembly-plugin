@@ -100,7 +100,7 @@
             
             Multiple formats can be
             supplied and the Assembly Plugin will generate an archive for each
-            of the desired formats. When deploying your project, all file formats
+            desired formats. When deploying your project, all file formats
             specified will also be deployed. A format is specified by supplying
             one of the following values in a &lt;format&gt; subelement:
             <ul>
@@ -108,9 +108,6 @@
               <li><b>"tar"</b> - Creates a TAR format</li>
               <li><b>"tar.gz"</b> - Creates a gzip'd TAR format</li>
               <li><b>"tar.bz2"</b> - Creates a bzip'd TAR format</li>
-              <li><b>"jar"</b> - Creates a JAR format</li>
-              <li><b>"dir"</b> - Creates an exploded directory format</li>
-              <li><b>"war"</b> - Creates a WAR format</li>
             </ul>
             ]]>
           </description>
@@ -125,7 +122,7 @@
             includeBaseDirectory to true will create an archive that
             includes this base directory. If this option is set to false
             the archive created will unzip its content to the current
-            directory.
+            directory. Default value is true.
           </description>
         </field>
         <field>
@@ -145,7 +142,7 @@
           <description>
             Includes a site directory in the final archive. The site directory
             location of a project is determined by the siteDirectory parameter
-            of the Assembly Plugin.
+            of the Assembly Plugin. Default value is false.
           </description>
         </field>
         <field>
@@ -339,7 +336,7 @@
             Write = 2, and Execute = 1.  For example, the value 0644
             translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -358,7 +355,7 @@
             Read = 4, Write = 2, and Execute = 1.  For example, the value
             0755 translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -456,7 +453,7 @@
             Write = 2, and Execute = 1.  For example, the value 0644
             translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -521,8 +518,8 @@
             artifact coordinates to include. If none is present, then
             &lt;includes&gt; represents all valid values.
             
-            Artifact coordinates may be given in simple groupId:artifactId form,
-            or they may be fully qualified in the form groupId:artifactId:type[:classifier]:version.
+            Artifact coordinatess may be given in simple groupId:artifactId form,
+            or they may be fully qualified in the form groupId:artifactId:type:version[:classifier].
             Additionally, wildcards can be used, as in *:maven-*
             ]]>
           </description>
@@ -540,8 +537,8 @@
             dependency artifact coordinates to exclude. If none is present, then
             &lt;excludes&gt; represents no exclusions.
             
-            Artifact coordinates may be given in simple groupId:artifactId form,
-            or they may be fully qualified in the form groupId:artifactId:type[:classifier]:version.
+            Artifact coordinatess may be given in simple groupId:artifactId form,
+            or they may be fully qualified in the form groupId:artifactId:type:version[:classifier].
             Additionally, wildcards can be used, as in *:maven-*
             ]]>
           </description>
@@ -561,7 +558,7 @@
             Write = 2, and Execute = 1.  For example, the value 0644
             translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -580,7 +577,7 @@
             Read = 4, Write = 2, and Execute = 1.  For example, the value
             0755 translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -602,8 +599,8 @@
           <defaultValue>${artifact.artifactId}-${artifact.version}${dashClassifier?}.${artifact.extension}</defaultValue>
           <description>
             Sets the mapping pattern for all dependencies included in this
-            assembly. (Since 2.2-beta-2; 2.2-beta-1 uses ${artifactId}-${version}${dashClassifier?}.${extension}
-            as default value)
+            assembly. Default is ${artifact.artifactId}-${artifact.version}${dashClassifier?}.${artifact.extension}.
+            (Since 2.2-beta-2; 2.2-beta-1 uses ${artifactId}-${version}${dashClassifier?}.${extension})
           </description>
         </field>
         <field>
@@ -615,7 +612,7 @@
             If set to true, this property will unpack all dependencies
             into the specified output directory. When set to false
             dependencies will be includes as archives (jars). Can only unpack
-            jar, zip, tar.gz, and tar.bz archives.
+            jar, zip, tar.gz, and tar.bz archives. Default value is false.
           </description>
         </field>
         <field>
@@ -637,6 +634,7 @@
           <required>true</required>
           <description>
             Sets the dependency scope for this dependencySet.
+            Default scope value is "runtime".
           </description>
         </field>
         <field>
@@ -646,7 +644,8 @@
           <defaultValue>true</defaultValue>
           <description><![CDATA[
           Determines whether the artifact produced during the current project's
-          build should be included in this dependency set. (Since 2.2-beta-1)
+          build should be included in this dependency set. Default value is true,
+          for backward compatibility. (Since 2.2-beta-1)
           ]]></description>
         </field>
         <field>
@@ -656,7 +655,7 @@
           <defaultValue>false</defaultValue>
           <description><![CDATA[
           Determines whether the attached artifacts produced during the current project's
-          build should be included in this dependency set. (Since 2.2-beta-1)
+          build should be included in this dependency set. Default value is false. (Since 2.2-beta-1)
           ]]></description>
         </field>
         <field>
@@ -713,7 +712,8 @@
           <defaultValue>false</defaultValue>
           <description>
           If set to true, the plugin will include all projects in the current reactor for processing 
-          in this ModuleSet. These will be subject to include/exclude rules. (Since 2.2)
+          in this ModuleSet. These will be subject to include/exclude rules.
+          Default value is true. (Since 2.2)
           </description>
         </field>
         <field>
@@ -723,7 +723,8 @@
           <defaultValue>true</defaultValue>
           <description>
           If set to false, the plugin will exclude sub-modules from processing in this ModuleSet.
-          Otherwise, it will process all sub-modules, each subject to include/exclude rules. (Since 2.2-beta-1)
+          Otherwise, it will process all sub-modules, each subject to include/exclude rules.
+          Default value is true. (Since 2.2-beta-1)
           </description>
         </field>
         <field>
@@ -739,8 +740,8 @@
             project coordinates to include. If none is present, then
             &lt;includes&gt; represents all valid values.
           
-            Artifact coordinates may be given in simple groupId:artifactId form,
-            or they may be fully qualified in the form groupId:artifactId:type[:classifier]:version.
+            Artifact coordinatess may be given in simple groupId:artifactId form,
+            or they may be fully qualified in the form groupId:artifactId:type:version[:classifier].
             Additionally, wildcards can be used, as in *:maven-*
             ]]>
           </description>
@@ -758,8 +759,8 @@
             project artifact coordinates to exclude. If none is present, then
             &lt;excludes&gt; represents no exclusions.
           
-            Artifact coordinates may be given in simple groupId:artifactId form,
-            or they may be fully qualified in the form groupId:artifactId:type[:classifier]:version.
+            Artifact coordinatess may be given in simple groupId:artifactId form,
+            or they may be fully qualified in the form groupId:artifactId:type:version[:classifier].
             Additionally, wildcards can be used, as in *:maven-*
             ]]>
           </description>
@@ -863,7 +864,7 @@
             Write = 2, and Execute = 1.  For example, the value 0644
             translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -882,7 +883,7 @@
             Read = 4, Write = 2, and Execute = 1.  For example, the value
             0755 translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -907,7 +908,7 @@
           <description>
             <![CDATA[
             Specifies whether the module's finalName should be prepended to the outputDirectory 
-            values of any fileSets applied to it. (Since 2.2-beta-1)
+            values of any fileSets applied to it. Default value is true. (Since 2.2-beta-1)
             ]]>
           </description>
         </field>
@@ -921,7 +922,8 @@
             Specifies whether sub-module directories below the current module should be excluded
             from fileSets applied to that module. This might be useful if you only mean to copy
             the sources for the exact module list matched by this ModuleSet, ignoring (or processing
-            separately) the modules which exist in directories below the current one. (Since 2.2-beta-1)
+            separately) the modules which exist in directories below the current one. 
+            Default value is true. (Since 2.2-beta-1)
             ]]>
           </description>
         </field>
@@ -971,8 +973,8 @@
             artifact coordinates to include. If none is present, then
             &lt;includes&gt; represents all valid values.
             
-            Artifact coordinates may be given in simple groupId:artifactId form,
-            or they may be fully qualified in the form groupId:artifactId:type[:classifier]:version.
+            Artifact coordinatess may be given in simple groupId:artifactId form,
+            or they may be fully qualified in the form groupId:artifactId:type:version[:classifier].
             Additionally, wildcards can be used, as in *:maven-*
             ]]>
           </description>
@@ -990,8 +992,8 @@
             dependency artifact coordinates to exclude. If none is present, then
             &lt;excludes&gt; represents no exclusions.
             
-            Artifact coordinates may be given in simple groupId:artifactId form,
-            or they may be fully qualified in the form groupId:artifactId:type[:classifier]:version.
+            Artifact coordinatess may be given in simple groupId:artifactId form,
+            or they may be fully qualified in the form groupId:artifactId:type:version[:classifier].
             Additionally, wildcards can be used, as in *:maven-*
             ]]>
           </description>
@@ -1011,7 +1013,7 @@
             Write = 2, and Execute = 1.  For example, the value 0644
             translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -1030,7 +1032,7 @@
             Read = 4, Write = 2, and Execute = 1.  For example, the value
             0755 translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -1052,7 +1054,7 @@
           <description>
           If set to true, the plugin will include the direct and transitive dependencies of
           of the project modules included here.  Otherwise, it will only include the module
-          packages only.
+          packages only. Default value is true.
           </description>
         </field>
         <field>
@@ -1079,6 +1081,7 @@
             If set to true, this property will unpack all module packages
             into the specified output directory. When set to false
             module packages will be included as archives (jars).
+            Default value is true.
           </description>
         </field>
         <field>
@@ -1100,9 +1103,9 @@
           <description>
             Sets the mapping pattern for all NON-UNPACKED dependencies included
             in this assembly.
-            (Since 2.2-beta-2; 2.2-beta-1 uses ${artifactId}-${version}${dashClassifier?}.${extension} as default value)
-            NOTE: If the dependencySet specifies unpack == true, outputFileNameMapping WILL NOT BE USED; in these cases,
-            use outputDirectory.
+            Default is ${module.artifactId}-${module.version}${dashClassifier?}.${module.extension}.
+            (Since 2.2-beta-2; 2.2-beta-1 uses ${artifactId}-${version}${dashClassifier?}.${extension}) NOTE: If the 
+            dependencySet specifies unpack == true, outputFileNameMapping WILL NOT BE USED; in these cases, use outputDirectory.
           </description>
         </field>
       </fields>
@@ -1148,8 +1151,8 @@
             artifact coordinates to include. If none is present, then
             &lt;includes&gt; represents all valid values.
             
-            Artifact coordinates may be given in simple groupId:artifactId form,
-            or they may be fully qualified in the form groupId:artifactId:type[:classifier]:version.
+            Artifact coordinatess may be given in simple groupId:artifactId form,
+            or they may be fully qualified in the form groupId:artifactId:type:version[:classifier].
             Additionally, wildcards can be used, as in *:maven-*
             ]]>
           </description>
@@ -1167,8 +1170,8 @@
             dependency artifact coordinates to exclude. If none is present, then
             &lt;excludes&gt; represents no exclusions.
             
-            Artifact coordinates may be given in simple groupId:artifactId form,
-            or they may be fully qualified in the form groupId:artifactId:type[:classifier]:version.
+            Artifact coordinatess may be given in simple groupId:artifactId form,
+            or they may be fully qualified in the form groupId:artifactId:type:version[:classifier].
             Additionally, wildcards can be used, as in *:maven-*
             ]]>
           </description>
@@ -1188,7 +1191,7 @@
             Write = 2, and Execute = 1.  For example, the value 0644
             translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -1207,7 +1210,7 @@
             Read = 4, Write = 2, and Execute = 1.  For example, the value
             0755 translates to User read-write, Group and Other read-only.
             <a href="http://www.onlamp.com/pub/a/bsd/2000/09/06/FreeBSD_Basics.html">(more on unix-style permissions)</a>
-            ]]>
+          	]]>
           </description>
         </field>
         <field>
@@ -1218,7 +1221,7 @@
           <description>
             If set to true, this property will trigger the creation of repository
             metadata which will allow the repository to be used as a functional remote
-            repository.
+            repository. Default value is false.
           </description>
         </field>
         <field>
@@ -1243,7 +1246,8 @@
           <defaultValue>runtime</defaultValue>
           <required>true</required>
           <description>
-            Specifies the scope for artifacts included in this repository. (Since 2.2-beta-1)
+            Specifies the scope for artifacts included in this repository.
+            Default scope value is "runtime". (Since 2.2-beta-1)
           </description>
         </field>
       </fields>

@@ -5,24 +5,11 @@ import java.util.jar.*;
 try
 {
     File file = new File( basedir, "target/filters-defined-in-build-1/file-1.properties");
-    // This is a properties file encoded using ISO-8859-1
-    BufferedReader r = new BufferedReader( new InputStreamReader( new FileInputStream( file ), "ISO-8859-1" ) );
+    BufferedReader r = new BufferedReader(new FileReader(file));
     String s = r.readLine();
     if(s.contains("filter.build"))
     {
         System.out.println("file-1.properties was not filtered");
-        return false;
-    }
-    s = r.readLine();
-    if(!s.contains("escapedString=${project.artifactId}"))
-    {
-        System.out.println("file-1.properties did not escape filtering");
-        return false;
-    }
-    s = r.readLine();
-    if(!s.contains("åäö"))
-    {
-        System.out.println("file-1.properties has corrupted non ascii characters");
         return false;
     }
 

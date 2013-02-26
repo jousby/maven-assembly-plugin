@@ -33,7 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @version $Id: AbstractDirectoryMojo.java 1392520 2012-10-01 19:01:56Z krosenvold $
+ * @version $Id: AbstractDirectoryMojo.java 1002228 2010-09-28 15:51:25Z jdcasey $
  */
 @Deprecated
 public abstract class AbstractDirectoryMojo
@@ -84,7 +84,7 @@ public abstract class AbstractDirectoryMojo
 
         try
         {
-            archiver.createArchive( assembly, fullName, "dir", this, isRecompressZippedFiles());
+            archiver.createArchive( assembly, fullName, "dir", this );
         }
         catch ( final ArchiveCreationException e )
         {

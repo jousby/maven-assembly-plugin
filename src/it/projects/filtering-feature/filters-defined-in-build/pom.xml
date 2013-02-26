@@ -23,7 +23,6 @@
             <descriptor>${basedir}/src/main/assembly/descriptor.xml</descriptor>
           </descriptors>
           <appendAssemblyId>false</appendAssemblyId>
-          <escapeString>\</escapeString>
         </configuration>
         <executions>
           <execution>
@@ -37,7 +36,4 @@
       </plugin>
     </plugins>
   </build>
-  <properties>
-    <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
-  </properties>
 </project>

@@ -153,8 +153,8 @@ public class FileSetFormatterTest
 
         try
         {
-            fileManager.assertFileContents( result, filename1, "Hello\r\nThis is a test." );
-            fileManager.assertFileContents( result, filename2, "Hello\r\nThis is also a test." );
+            fileManager.assertFileContents( result, filename1, "Hello\r\nThis is a test.\r\n" );
+            fileManager.assertFileContents( result, filename2, "Hello\r\nThis is also a test.\r\n" );
         }
         finally
         {
@@ -195,7 +195,7 @@ public class FileSetFormatterTest
 
         try
         {
-            fileManager.assertFileContents( result, filename1, "Hello\r\nThis is a test." );
+            fileManager.assertFileContents( result, filename1, "Hello\r\nThis is a test.\r\n" );
             fileManager.assertFileExistence( result, filename2, false );
         }
         finally
@@ -236,7 +236,7 @@ public class FileSetFormatterTest
         assertFalse( dir.equals( result ) );
         try
         {
-            fileManager.assertFileContents( result, filename1, "Hello\r\nThis is a test." );
+            fileManager.assertFileContents( result, filename1, "Hello\r\nThis is a test.\r\n" );
             fileManager.assertFileExistence( result, filename2, false );
         }
         finally
@@ -277,7 +277,7 @@ public class FileSetFormatterTest
 
         try
         {
-            fileManager.assertFileContents( result, filename1, "Hello\r\nThis is a test." );
+            fileManager.assertFileContents( result, filename1, "Hello\r\nThis is a test.\r\n" );
             fileManager.assertFileExistence( result, filename2, false );
         }
         finally
@@ -356,9 +356,6 @@ public class FileSetFormatterTest
 
         configSource.getEncoding();
         configSourceControl.setReturnValue( "UTF-8", MockControl.ONE_OR_MORE );
-
-        configSource.getEscapeString();
-        configSourceControl.setReturnValue( null, MockControl.ONE_OR_MORE );
     }
 
 }

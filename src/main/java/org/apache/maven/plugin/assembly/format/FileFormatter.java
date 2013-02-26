@@ -21,7 +21,6 @@ package org.apache.maven.plugin.assembly.format;
 
 import org.apache.maven.plugin.assembly.AssemblerConfigurationSource;
 import org.apache.maven.plugin.assembly.utils.AssemblyFileUtils;
-import org.apache.maven.shared.filtering.MavenFileFilterRequest;
 import org.apache.maven.shared.filtering.MavenFilteringException;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.FileUtils;
@@ -30,15 +29,14 @@ import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Locale;
 
 /**
- * @version $Id: FileFormatter.java 1403897 2012-10-30 22:11:04Z dennisl $
+ * @version $Id: FileFormatter.java 1163853 2011-08-31 22:42:32Z jdcasey $
  */
 public class FileFormatter
 {
@@ -74,18 +72,18 @@ public class FileFormatter
         }
 
         if ( filter )
-            result = doFileFilter( source, tempRoot, encoding, configSource.getEscapeString() );
+            result = doFileFilter( source, tempRoot, encoding );
 
         String lineEndingChars = AssemblyFileUtils.getLineEndingCharacters( lineEnding );
         if ( lineEndingChars != null )
         {
-            result = formatLineEndings( lineEndingChars, result, tempRoot, encoding );
+            result = formatLineEndings( lineEndingChars, result, tempRoot );
         }
 
         return result;
     }
 
-    private File doFileFilter( File source, File tempRoot, String encoding, String escapeString )
+    private File doFileFilter( File source, File tempRoot, String encoding )
         throws AssemblyFormattingException
     {
         try
@@ -95,11 +93,8 @@ public class FileFormatter
             //@todo this test can be improved
             boolean isPropertiesFile = source.getName().toLowerCase( Locale.ENGLISH ).endsWith( ".properties" );
 
-            MavenFileFilterRequest filterRequest = new MavenFileFilterRequest( source, target, true, configSource.getProject(),
-                    configSource.getFilters(), isPropertiesFile, encoding, configSource.getMavenSession(), null );
-            filterRequest.setEscapeString( escapeString );
-            filterRequest.setInjectProjectBuildFilters( true );
-            configSource.getMavenFileFilter().copyFile( filterRequest );
+            configSource.getMavenFileFilter().copyFile( source, target, true, configSource.getProject(),
+                    configSource.getFilters(), isPropertiesFile, encoding, configSource.getMavenSession() );
 
             return target;
         }
@@ -109,26 +104,17 @@ public class FileFormatter
         }
     }
 
-    private File formatLineEndings( String lineEndingChars, File source, File tempRoot, String encoding )
+    private File formatLineEndings( String lineEndingChars, File source, File tempRoot )
         throws AssemblyFormattingException
     {
         Reader contentReader = null;
         try
         {
-            if ( encoding == null )
-            {
-                // Use default encoding
-                contentReader = new InputStreamReader( new FileInputStream( source ) );
-            }
-            else
-            {
-                //  MASSEMBLY-371
-                contentReader = new InputStreamReader( new FileInputStream( source ), encoding );
-            }
+            contentReader = new FileReader( source );
 
             File target = FileUtils.createTempFile( source.getName() + ".", ".formatted", tempRoot );
 
-            AssemblyFileUtils.convertLineEndings( contentReader, target, lineEndingChars, encoding );
+            AssemblyFileUtils.convertLineEndings( contentReader, target, lineEndingChars );
 
             return target;
         }

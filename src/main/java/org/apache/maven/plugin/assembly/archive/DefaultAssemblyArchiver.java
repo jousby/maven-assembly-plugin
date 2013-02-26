@@ -58,7 +58,6 @@ import org.codehaus.plexus.archiver.manager.NoSuchArchiverException;
 import org.codehaus.plexus.archiver.tar.TarArchiver;
 import org.codehaus.plexus.archiver.tar.TarLongFileMode;
 import org.codehaus.plexus.archiver.war.WarArchiver;
-import org.codehaus.plexus.archiver.zip.AbstractZipArchiver;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
@@ -83,7 +82,7 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
  * interpret the various sections of the assembly descriptor and determine which files to add, and other associated
  * activities.
  * 
- * @version $Id: DefaultAssemblyArchiver.java 1402062 2012-10-25 09:47:28Z dennisl $
+ * @version $Id: DefaultAssemblyArchiver.java 1163853 2011-08-31 22:42:32Z jdcasey $
  */
 @Component( role = AssemblyArchiver.class )
 public class DefaultAssemblyArchiver
@@ -132,8 +131,8 @@ public class DefaultAssemblyArchiver
      * top-level section of the assembly descriptor, if that section is present.</li>
      * </ol>
      */
-    public File createArchive(final Assembly assembly, final String fullName, final String format,
-                              final AssemblerConfigurationSource configSource, boolean recompressZippedFiles)
+    public File createArchive( final Assembly assembly, final String fullName, final String format,
+                               final AssemblerConfigurationSource configSource )
         throws ArchiveCreationException, AssemblyFormattingException, InvalidAssemblerConfigurationException
     {
         validate( assembly );
@@ -168,7 +167,7 @@ public class DefaultAssemblyArchiver
                 selectContainerDescriptorHandlers( assembly.getContainerDescriptorHandlers(), configSource );
 
             final Archiver archiver =
-                createArchiver( format, assembly.isIncludeBaseDirectory(), basedir, configSource, containerHandlers, recompressZippedFiles);
+                createArchiver( format, assembly.isIncludeBaseDirectory(), basedir, configSource, containerHandlers );
 
             archiver.setDestFile( destFile );
 
@@ -281,24 +280,19 @@ public class DefaultAssemblyArchiver
      * @param finalName
      * @param configSource
      * @param containerHandlers
-     * @param recompressZippedFiles
      * @return archiver Archiver generated
      * @throws org.codehaus.plexus.archiver.ArchiverException
      * @throws org.codehaus.plexus.archiver.manager.NoSuchArchiverException
      */
-    protected Archiver createArchiver(final String format, final boolean includeBaseDir, final String finalName,
-                                      final AssemblerConfigurationSource configSource,
-                                      final List<ContainerDescriptorHandler> containerHandlers, boolean recompressZippedFiles)
+    protected Archiver createArchiver( final String format, final boolean includeBaseDir, final String finalName,
+                                       final AssemblerConfigurationSource configSource,
+                                       final List<ContainerDescriptorHandler> containerHandlers )
         throws ArchiverException, NoSuchArchiverException
     {
         Archiver archiver;
         if ( format.startsWith( "tar" ) )
         {
             archiver = createTarArchiver( format, configSource.getTarLongFileMode() );
-        }
-        else if ( format.equals( "tpackage" ) )
-        {
-            archiver = createTPackageArchiver( format, configSource.getTarLongFileMode() );
         }
         else if ( "war".equals( format ) )
         {
@@ -309,19 +303,13 @@ public class DefaultAssemblyArchiver
             archiver = archiverManager.getArchiver( format );
         }
 
-        if (archiver instanceof AbstractZipArchiver)
-        {
-            ((AbstractZipArchiver)archiver).setRecompressAddedZips(recompressZippedFiles);
-        }
-
         final List<FileSelector> extraSelectors = new ArrayList<FileSelector>();
         final List<ArchiveFinalizer> extraFinalizers = new ArrayList<ArchiveFinalizer>();
         if ( archiver instanceof JarArchiver )
         {
             extraSelectors.add( new JarSecurityFileSelector() );
 
-            extraFinalizers.add( new ManifestCreationFinalizer( configSource.getMavenSession(),
-                                                                configSource.getProject(),
+            extraFinalizers.add( new ManifestCreationFinalizer( configSource.getProject(),
                                                                 configSource.getJarArchiveConfiguration() ) );
 
         }
@@ -497,22 +485,6 @@ public class DefaultAssemblyArchiver
         throws NoSuchArchiverException, ArchiverException
     {
         final TarArchiver tarArchiver = (TarArchiver) archiverManager.getArchiver( "tar" );
-        configureTarArchiver(format, tarLongFileMode, tarArchiver);
-
-        return tarArchiver;
-    }
-    
-    protected Archiver createTPackageArchiver( final String format, final String tarLongFileMode )
-        throws NoSuchArchiverException, ArchiverException
-    {
-        final TPackageArchiver tpackageArchiver = new TPackageArchiver();        
-        configureTarArchiver(format, tarLongFileMode, tpackageArchiver);
-
-        return tpackageArchiver;
-    }
-
-    private void configureTarArchiver(final String format,
-            final String tarLongFileMode, final TarArchiver tarArchiver) {
         final int index = format.indexOf( '.' );
         if ( index >= 0 )
         {
@@ -543,6 +515,8 @@ public class DefaultAssemblyArchiver
         tarFileMode.setValue( tarLongFileMode );
 
         tarArchiver.setLongfile( tarFileMode );
+
+        return tarArchiver;
     }
 
     public void contextualize( final Context context )

@@ -22,9 +22,8 @@ package org.apache.maven.plugin.assembly.utils;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.io.Reader;
 import java.nio.channels.FileChannel;
@@ -39,7 +38,7 @@ import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.IOUtil;
 
 /**
- * @version $Id: AssemblyFileUtils.java 1403897 2012-10-30 22:11:04Z dennisl $
+ * @version $Id: AssemblyFileUtils.java 1067016 2011-02-03 22:44:09Z dennisl $
  */
 public final class AssemblyFileUtils
 {
@@ -136,7 +135,7 @@ public final class AssemblyFileUtils
      * @param lineEndings This is the result of the getLineEndingChars(..) method in this utility class; the actual
      *   line-ending characters.
      */
-    public static void convertLineEndings( Reader source, File dest, String lineEndings, String encoding )
+    public static void convertLineEndings( Reader source, File dest, String lineEndings )
         throws IOException
     {
         BufferedWriter out = null;
@@ -152,27 +151,19 @@ public final class AssemblyFileUtils
                 bufferedSource = new BufferedReader( source );
             }
 
-            if ( encoding == null )
-            {
-                out = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( dest ) ) ); // platform encoding
-            }
-            else
-            {
-                out = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( dest ), encoding ) );
-            }
+            out = new BufferedWriter( new FileWriter( dest ) ); // platform encoding
 
             String line;
 
-            line = bufferedSource.readLine();
-            while ( line != null )
+            do
             {
-                out.write( line );
                 line = bufferedSource.readLine();
                 if ( line != null )
                 {
+                    out.write( line );
                     out.write( lineEndings );
                 }
-            }
+            } while ( line != null );
 
             out.flush();
         }

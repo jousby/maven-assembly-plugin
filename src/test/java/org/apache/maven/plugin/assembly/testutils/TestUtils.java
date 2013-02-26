@@ -59,7 +59,7 @@ public final class TestUtils
      */
     public static String readFile( File file ) throws IOException
     {
-        StringBuilder buffer = new StringBuilder();
+        StringBuffer buffer = new StringBuffer();
 
         BufferedReader reader = new BufferedReader( new FileReader( file ) ); // platform encoding
 

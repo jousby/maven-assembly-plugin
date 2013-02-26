@@ -130,38 +130,42 @@ public class AssemblyFileUtilsTest
         }
     }
 
+    // TODO: Fix the end-of-document problem with line-ending conversions.
     public void testConvertLineEndings_ShouldReplaceLFWithCRLF()
         throws IOException
     {
         String test = "This is a \ntest.";
-        String check = "This is a \r\ntest.";
+        String check = "This is a \r\ntest.\r\n";
 
         testConversion( test, check, "\r\n" );
     }
 
+    // TODO: Fix the end-of-document problem with line-ending conversions.
     public void testConvertLineEndings_ShouldReplaceCRLFWithLF()
         throws IOException
     {
         String test = "This is a \r\ntest.";
-        String check = "This is a \ntest.";
+        String check = "This is a \ntest.\n";
 
         testConversion( test, check, "\n" );
     }
 
+    // TODO: Fix the end-of-document problem with line-ending conversions.
     public void testConvertLineEndings_ShouldReplaceLFWithLF()
         throws IOException
     {
         String test = "This is a \ntest.";
-        String check = "This is a \ntest.";
+        String check = "This is a \ntest.\n";
 
         testConversion( test, check, "\n" );
     }
 
+    // TODO: Fix the end-of-document problem with line-ending conversions.
     public void testConvertLineEndings_ShouldReplaceCRLFWithCRLF()
         throws IOException
     {
         String test = "This is a \r\ntest.";
-        String check = "This is a \r\ntest.";
+        String check = "This is a \r\ntest.\r\n";
 
         testConversion( test, check, "\r\n" );
     }
@@ -172,8 +176,7 @@ public class AssemblyFileUtilsTest
         File dest = File.createTempFile( "line-conversion-test.", "" );
         dest.deleteOnExit();
 
-        // Using platform encoding for the conversion tests in this class is OK
-        AssemblyFileUtils.convertLineEndings( new StringReader( test ), dest, lineEndingChars, null );
+        AssemblyFileUtils.convertLineEndings( new StringReader( test ), dest, lineEndingChars );
 
         FileReader reader = null;
         StringWriter writer = new StringWriter();

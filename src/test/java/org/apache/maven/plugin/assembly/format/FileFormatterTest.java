@@ -113,6 +113,7 @@ public class FileFormatterTest
         mockManager.verifyAll();
     }
 
+    // TODO: Should not be appending line-ending at the end if there is none in the source.
     public void testShouldConvertCRLFLineEndingsInFile() throws IOException, AssemblyFormattingException
     {
         final File basedir = fileManager.createTempDir();
@@ -126,11 +127,12 @@ public class FileFormatterTest
 
         final File result = new FileFormatter( configSource, logger ).format( file, false, "dos", "UTF-8" );
 
-        assertEquals( "This is a\r\ntest.", fileManager.getFileContents( result ) );
+        assertEquals( "This is a\r\ntest.\r\n", fileManager.getFileContents( result ) );
 
         mockManager.verifyAll();
     }
 
+    // TODO: Should not be appending line-ending at the end if there is none in the source.
     public void testShouldConvertLFLineEndingsInFile() throws IOException, AssemblyFormattingException
     {
         final File basedir = fileManager.createTempDir();
@@ -144,7 +146,7 @@ public class FileFormatterTest
 
         final File result = new FileFormatter( configSource, logger ).format( file, false, "unix", "UTF-8" );
 
-        assertEquals( "This is a\ntest.", fileManager.getFileContents( result ) );
+        assertEquals( "This is a\ntest.\n", fileManager.getFileContents( result ) );
 
         mockManager.verifyAll();
     }
@@ -379,9 +381,6 @@ public class FileFormatterTest
     {
         configSource.getTemporaryRootDirectory();
         configSourceControl.setReturnValue( basedir );
-
-        configSource.getEscapeString();
-        configSourceControl.setReturnValue( null, MockControl.ONE_OR_MORE );
 
         configSource.getProject();
         configSourceControl.setReturnValue( project, MockControl.ONE_OR_MORE );

@@ -51,7 +51,7 @@ import java.util.Properties;
 import java.util.Set;
 
 /**
- * @version $Id: AssemblyInterpolator.java 1384337 2012-09-13 13:53:19Z olamy $
+ * @version $Id: AssemblyInterpolator.java 1074695 2011-02-25 20:44:36Z jdcasey $
  */
 public class AssemblyInterpolator
     extends AbstractLogEnabled
@@ -125,7 +125,7 @@ public class AssemblyInterpolator
 
         if ( objectInterpolator.hasWarnings() && getLogger().isDebugEnabled() )
         {
-            final StringBuilder sb = new StringBuilder();
+            final StringBuffer sb = new StringBuffer();
 
             sb.append( "One or more minor errors occurred while interpolating the assembly with ID: "
                             + assembly.getId() + ":\n" );

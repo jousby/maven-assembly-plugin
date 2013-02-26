@@ -29,7 +29,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @version $Id: AssemblerConfigurationSource.java 1401670 2012-10-24 13:28:11Z dennisl $
+ * @version $Id: AssemblerConfigurationSource.java 1163853 2011-08-31 22:42:32Z jdcasey $
  */
 public interface AssemblerConfigurationSource
 {
@@ -97,6 +97,4 @@ public interface AssemblerConfigurationSource
     boolean isIgnorePermissions();
     
     String getEncoding();
-
-    String getEscapeString();
 }

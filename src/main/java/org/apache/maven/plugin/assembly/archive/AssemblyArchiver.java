@@ -27,12 +27,12 @@ import org.apache.maven.plugin.assembly.model.Assembly;
 import java.io.File;
 
 /**
- * @version $Id: AssemblyArchiver.java 1392520 2012-10-01 19:01:56Z krosenvold $
+ * @version $Id: AssemblyArchiver.java 1002228 2010-09-28 15:51:25Z jdcasey $
  */
 public interface AssemblyArchiver
 {
     String ROLE = AssemblyArchiver.class.getName();
 
-    File createArchive(Assembly assembly, String fullName, String format, AssemblerConfigurationSource configSource, boolean recompressZippedFiles)
+    File createArchive( Assembly assembly, String fullName, String format, AssemblerConfigurationSource configSource )
         throws ArchiveCreationException, AssemblyFormattingException, InvalidAssemblerConfigurationException;
 }

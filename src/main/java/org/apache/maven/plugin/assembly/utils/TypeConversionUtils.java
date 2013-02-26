@@ -25,7 +25,7 @@ import org.codehaus.plexus.logging.Logger;
 import java.util.List;
 
 /**
- * @version $Id: TypeConversionUtils.java 1384337 2012-09-13 13:53:19Z olamy $
+ * @version $Id: TypeConversionUtils.java 999612 2010-09-21 20:34:50Z jdcasey $
  */
 public final class TypeConversionUtils
 {
@@ -91,7 +91,7 @@ public final class TypeConversionUtils
     // assessment.
     public static boolean verifyModeSanity( final int mode, final Logger logger )
     {
-        final StringBuilder messages = new StringBuilder();
+        final StringBuffer messages = new StringBuffer();
 
         messages.append( "The mode: " + Integer.toString( mode, 8 ) + " contains nonsensical permissions:" );
 

@@ -203,10 +203,7 @@ public class ConfigSourceStub
     }
     
     public String getEncoding() {
-        return null;
+    	return null;
     }
 
-    public String getEscapeString() {
-        return null;
-    }
 }

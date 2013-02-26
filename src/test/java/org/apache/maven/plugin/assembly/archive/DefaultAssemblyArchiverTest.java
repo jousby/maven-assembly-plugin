@@ -117,7 +117,7 @@ public class DefaultAssemblyArchiverTest
         mm.replayAll();
 
         final DefaultAssemblyArchiver archiver = createSubject( macMgr, null, null );
-        archiver.createArchive( new Assembly(), "full-name", "zip", configSource, false);
+        archiver.createArchive( new Assembly(), "full-name", "zip", configSource );
 
         mm.verifyAll();
     }
@@ -213,7 +213,7 @@ public class DefaultAssemblyArchiverTest
 
         final DefaultAssemblyArchiver subject = createSubject( macMgr, Collections.singletonList( phase ), null );
 
-        subject.createArchive( assembly, "full-name", "zip", configSource, false);
+        subject.createArchive( assembly, "full-name", "zip", configSource );
 
         mm.verifyAll();
     }
@@ -276,7 +276,7 @@ public class DefaultAssemblyArchiverTest
         final DefaultAssemblyArchiver subject =
             createSubject( macArchiverManager, new ArrayList<AssemblyArchiverPhase>(), null );
 
-        subject.createArchiver( "dummy", false, "finalName", configSource, null, false);
+        subject.createArchiver( "dummy", false, "finalName", configSource, null );
 
         assertEquals( simpleConfig, archiver.getSimpleConfig() );
 
@@ -329,7 +329,7 @@ public class DefaultAssemblyArchiverTest
         final DefaultAssemblyArchiver subject =
             createSubject( macArchiverManager, new ArrayList<AssemblyArchiverPhase>(), null );
 
-        subject.createArchiver( "tar", false, "finalName", configSource, null, false);
+        subject.createArchiver( "tar", false, "finalName", configSource, null );
 
         assertNull( ttArchiver.compressionMethod );
         assertEquals( TarLongFileMode.FAIL, ttArchiver.longFileMode.getValue() );
@@ -358,9 +358,6 @@ public class DefaultAssemblyArchiverTest
         configSource.getArchiverConfig();
         configCtl.setReturnValue( null, MockControl.ZERO_OR_MORE );
 
-        configSource.getMavenSession();
-        configCtl.setReturnValue( null, MockControl.ZERO_OR_MORE );
-
         configSource.getProject();
         configCtl.setReturnValue( new MavenProject( new Model() ), MockControl.ZERO_OR_MORE );
 
@@ -383,7 +380,7 @@ public class DefaultAssemblyArchiverTest
         final DefaultAssemblyArchiver subject =
             createSubject( macArchiverManager, new ArrayList<AssemblyArchiverPhase>(), null );
 
-        subject.createArchiver( "war", false, null, configSource, null, false);
+        subject.createArchiver( "war", false, null, configSource, null );
 
         assertFalse( twArchiver.ignoreWebxml );
     }
@@ -425,7 +422,7 @@ public class DefaultAssemblyArchiverTest
         final DefaultAssemblyArchiver subject =
             createSubject( macArchiverManager, new ArrayList<AssemblyArchiverPhase>(), null );
 
-        subject.createArchiver( "zip", false, null, configSource, null, false);
+        subject.createArchiver( "zip", false, null, configSource, null );
     }
 
     // TODO: Re-implement these tests on the createArchiver(..) method. For now, they're no big loss.

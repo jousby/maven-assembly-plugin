@@ -52,7 +52,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @version $Id: AddDependencySetsTask.java 1402042 2012-10-25 09:36:42Z dennisl $
+ * @version $Id: AddDependencySetsTask.java 1002344 2010-09-28 20:21:53Z jdcasey $
  */
 public class AddDependencySetsTask
     implements ArchiverTask
@@ -217,7 +217,7 @@ public class AddDependencySetsTask
                                               final AssemblerConfigurationSource configSource )
         throws ArchiveCreationException, AssemblyFormattingException
     {
-        logger.debug( "Adding dependency artifact " + depArtifact.getId() + " after filtering the unpacked contents." );
+        logger.debug( "Adding dependency artifact" + depArtifact.getId() + " after filtering the unpacked contents." );
 
         final StringBuilder sb =
             new StringBuilder().append( depArtifact.getGroupId() )
@@ -317,7 +317,7 @@ public class AddDependencySetsTask
                                     final AssemblerConfigurationSource configSource )
         throws AssemblyFormattingException, ArchiveCreationException
     {
-        logger.debug( "Adding dependency artifact " + depArtifact.getId() + "." );
+        logger.debug( "Adding dependency artifact" + depArtifact.getId() + "." );
 
         final AddArtifactTask task = new AddArtifactTask( depArtifact, logger );
 

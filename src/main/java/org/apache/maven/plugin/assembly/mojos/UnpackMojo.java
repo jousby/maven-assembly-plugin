@@ -25,10 +25,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.assembly.archive.ArchiveExpansionException;
 import org.apache.maven.plugin.assembly.utils.AssemblyFileUtils;
-import org.apache.maven.plugins.annotations.Component;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.archiver.manager.ArchiverManager;
 import org.codehaus.plexus.archiver.manager.NoSuchArchiverException;
@@ -40,35 +36,41 @@ import java.util.Set;
 
 /**
  * Unpack project dependencies. Currently supports dependencies of type jar and zip.
- *
- * @version $Id: UnpackMojo.java 1359773 2012-07-10 16:43:50Z tchemit $
+ * 
+ * @version $Id: UnpackMojo.java 999625 2010-09-21 20:40:39Z jdcasey $
+ * @goal unpack
+ * @requiresDependencyResolution test
+ * @inheritByDefault false
  * @deprecated Use org.apache.maven.plugins:maven-dependency-plugin goal: unpack or unpack-dependencies instead.
  */
-@Mojo( name = "unpack", requiresDependencyResolution = ResolutionScope.TEST, inheritByDefault = false )
 @Deprecated
 public class UnpackMojo
     extends AbstractMojo
 {
 
     /**
+     * @parameter default-value="${project}"
+     * @required
+     * @readonly
      */
-    @Component
     private MavenProject project;
 
     /**
+     * @component
      */
-    @Component
     private ArchiverManager archiverManager;
 
     /**
      * Directory to unpack JARs into if needed
+     * 
+     * @parameter expression="${project.build.directory}/assembly/work"
+     * @required
      */
-    @Parameter( defaultValue = "${project.build.directory}/assembly/work", required = true )
     protected File workDirectory;
 
     /**
      * Unpacks the archive file.
-     *
+     * 
      * @throws MojoExecutionException
      */
     public void execute()
@@ -76,7 +78,8 @@ public class UnpackMojo
     {
         final Set<Artifact> dependencies = new LinkedHashSet<Artifact>();
 
-        if ( project.getArtifact() != null && project.getArtifact().getFile() != null )
+        if ( project.getArtifact() != null && project.getArtifact()
+                                                     .getFile() != null )
         {
             dependencies.add( project.getArtifact() );
         }
@@ -92,7 +95,8 @@ public class UnpackMojo
         {
             final Artifact artifact = j.next();
 
-            final String name = artifact.getFile().getName();
+            final String name = artifact.getFile()
+                                        .getName();
 
             final File tempLocation = new File( workDirectory, name.substring( 0, name.lastIndexOf( '.' ) ) );
             boolean process = false;
@@ -101,7 +105,8 @@ public class UnpackMojo
                 tempLocation.mkdirs();
                 process = true;
             }
-            else if ( artifact.getFile().lastModified() > tempLocation.lastModified() )
+            else if ( artifact.getFile()
+                              .lastModified() > tempLocation.lastModified() )
             {
                 process = true;
             }

@@ -132,7 +132,7 @@ Advanced Assembly-Descriptor Topics
         * <<<groupId:artifactId>>>
           ( <<<ArtifactUtils.versionlessKey( artifact )>>> )
 
-        * <<<groupId:artifactId:type:classifier:version>>>
+        * <<<groupId:artifactId:version:type:classifier>>>
           ( <<<artifact.getId()>>> )
 
         []

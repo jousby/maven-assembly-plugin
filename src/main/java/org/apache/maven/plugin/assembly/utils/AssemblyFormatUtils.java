@@ -42,7 +42,7 @@ import java.util.ListIterator;
 import java.util.Properties;
 
 /**
- * @version $Id: AssemblyFormatUtils.java 1401695 2012-10-24 14:01:38Z dennisl $
+ * @version $Id: AssemblyFormatUtils.java 1074695 2011-02-25 20:44:36Z jdcasey $
  */
 public final class AssemblyFormatUtils
 {
@@ -391,7 +391,7 @@ public final class AssemblyFormatUtils
 
         final Properties specialRules = new Properties();
 
-        final String classifier = ProjectUtils.getClassifier( artifact );
+        final String classifier = artifact.getClassifier();
         if ( classifier != null )
         {
             specialRules.setProperty( "dashClassifier?", "-" + classifier );
